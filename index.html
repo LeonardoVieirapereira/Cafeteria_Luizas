@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel & Brew | Cafeteria & eSports Arena</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0b0e14',
+                            card: '#151b26',
+                            accent: '#8b5cf6', // Roxo Neon
+                            cyan: '#06b6d4',   // Ciano Neon
+                            coffee: '#d97706', // Âmbar / Café
+                            green: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        code: ['Fira Code', 'monospace'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Neon Glows */
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+        }
+        .text-glow-purple {
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(139, 92, 246, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-200 font-sans antialiased selection:bg-brand-accent selection:text-white bg-grid-pattern">
+
+    <!-- BARRA SUPERIOR DE NAVEGAÇÃO DE TRABALHO ACADÊMICO -->
+    <div class="bg-indigo-950/80 border-b border-indigo-500/30 text-xs py-2 px-4 text-indigo-200 flex justify-between items-center backdrop-blur-md sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded border border-brand-accent/40 font-code font-semibold">TRABALHO ACADÊMICO</span>
+            <span class="hidden md:inline">Projeto Interativo de Front-End & Concept Design</span>
+        </div>
+        <button onclick="toggleModalAcademic()" class="hover:text-white transition flex items-center gap-1 bg-indigo-900/50 hover:bg-indigo-800 px-3 py-1 rounded border border-indigo-400/30">
+            <i class="fa-solid fa-graduation-cap"></i> Ver Ficha do Trabalho
+        </button>
+    </div>
+
+    <!-- HEADER / MENU PRINCIPAL -->
+    <header class="bg-brand-dark/90 backdrop-blur-lg border-b border-slate-800 sticky top-8 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- LOGO -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-gradient-to-tr from-brand-accent to-brand-cyan rounded-xl flex items-center justify-center text-white text-xl shadow-lg glow-purple transition transform group-hover:scale-105">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </div>
+                <div>
+                    <span class="font-orbitron font-extrabold text-2xl tracking-wider text-white flex items-center gap-1">
+                        PIXEL<span class="text-brand-cyan">&</span>BREW
+                    </span>
+                    <span class="text-[10px] text-slate-400 tracking-widest font-code block -mt-1">GAMING CAFÉ & ARENA</span>
+                </div>
+            </a>
+
+            <!-- NAV DESKTOP -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#sobre" class="hover:text-brand-cyan transition">Sobre Nós</a>
+                <a href="#cardapio" class="hover:text-brand-cyan transition">Cardápio Gamer</a>
+                <a href="#arena" class="hover:text-brand-cyan transition">Lan House Arena</a>
+                <a href="#torneios" class="hover:text-brand-cyan transition">Torneios</a>
+                <a href="#reserva" class="bg-gradient-to-r from-brand-accent to-purple-700 hover:opacity-90 text-white font-semibold px-5 py-2.5 rounded-lg shadow-md transition transform hover:-translate-y-0.5 glow-purple">
+                    <i class="fa-solid fa-gamepad mr-2"></i>Reservar PC
+                </a>
+            </nav>
+
+            <!-- BOTAO MENU MOBILE -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-300 hover:text-white text-2xl">
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- MENU MOBILE DROPDOWN -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-slate-800 px-4 py-4 space-y-3">
+            <a href="#sobre" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-cyan">Sobre Nós</a>
+            <a href="#cardapio" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-cyan">Cardápio Gamer</a>
+            <a href="#arena" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-cyan">Lan House Arena</a>
+            <a href="#torneios" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-brand-cyan">Torneios</a>
+            <a href="#reserva" onclick="toggleMobileMenu()" class="block w-full text-center bg-brand-accent text-white py-2 rounded-lg font-semibold">Reservar PC</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-4">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-accent/10 via-transparent to-brand-dark pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-brand-accent/20 border border-brand-accent/40 text-brand-accent px-3 py-1 rounded-full text-xs font-code mb-6">
+                    <span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span>
+                    O Melhor do Café Especial + eSports de Alta Performance
+                </div>
+                <h1 class="font-orbitron text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                    ONDE O <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-cyan text-glow-purple">CAFÉ</span> ENCONTRA O <span class="text-brand-cyan text-glow-cyan">FPS</span>.
+                </h1>
+                <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                    Seja para tomar um espresso de grãos selecionados enquanto estuda, ou para dominar as partidas ranqueadas com PCs de altíssima frequência e setup profissional. O <strong>Pixel & Brew</strong> é o seu novo habitat.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#arena" class="bg-gradient-to-r from-brand-accent to-brand-cyan text-white font-bold px-8 py-4 rounded-xl shadow-lg glow-purple hover:opacity-90 transition transform hover:-translate-y-1 flex items-center gap-3">
+                        <i class="fa-solid fa-desktop"></i> Conhecer a Arena
+                    </a>
+                    <a href="#cardapio" class="bg-brand-card hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold px-8 py-4 rounded-xl transition flex items-center gap-3">
+                        <i class="fa-solid fa-cookie-bite"></i> Ver Cardápio
+                    </a>
+                </div>
+            </div>
+
+            <!-- ILUSTRAÇÃO CONCEITUAL / AMBIENTE -->
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-accent to-brand-cyan rounded-2xl blur-lg opacity-40 group-hover:opacity-75 transition duration-1000"></div>
+                <div class="relative bg-brand-card rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+                    <!-- SVG Ilustração Customizada do Espaço Gamer/Café -->
+                    <svg viewBox="0 0 800 500" class="w-full h-auto object-cover bg-slate-950">
+                        <defs>
+                            <linearGradient id="neonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#8b5cf6"/>
+                                <stop offset="100%" stop-color="#06b6d4"/>
+                            </linearGradient>
+                            <linearGradient id="coffeeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#d97706"/>
+                                <stop offset="100%" stop-color="#78350f"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Background Room -->
+                        <rect width="800" height="500" fill="#090d16"/>
+                        <!-- Ambient Grid Lines -->
+                        <path d="M 0 400 L 800 400 M 0 430 L 800 430 M 0 470 L 800 470" stroke="#1e293b" stroke-width="2"/>
+                        <path d="M 100 400 L 0 500 M 300 400 L 200 500 M 500 400 L 600 500 M 700 400 L 800 500" stroke="#1e293b" stroke-width="2"/>
+                        
+                        <!-- Lado Esquerdo: Área do Café Gourmet -->
+                        <rect x="50" y="220" width="280" height="180" rx="10" fill="#151b26" stroke="#334155" stroke-width="2"/>
+                        <text x="70" y="250" fill="#d97706" font-family="Orbitron" font-weight="bold" font-size="18">COFFEE BAR</text>
+                        <!-- Máquina de Espresso -->
+                        <rect x="80" y="280" width="90" height="100" rx="5" fill="#334155"/>
+                        <rect x="90" y="290" width="70" height="40" fill="#0f172a"/>
+                        <circle cx="110" cy="350" r="8" fill="#d97706"/>
+                        <circle cx="140" cy="350" r="8" fill="#d97706"/>
+                        <!-- Xícara fumegante -->
+                        <path d="M 220 340 L 250 340 L 245 370 L 225 370 Z" fill="#f8fafc"/>
+                        <path d="M 250 345 C 258 345 258 360 247 360" stroke="#f8fafc" stroke-width="3" fill="none"/>
+                        <!-- Vapor em SVG -->
+                        <path d="M 230 330 Q 235 320 230 310 T 230 290" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.6"/>
+                        <path d="M 240 332 Q 245 322 240 312 T 240 292" stroke="#818cf8" stroke-width="2" fill="none" opacity="0.4"/>
+
+                        <!-- Neon Divider Logo no Centro -->
+                        <line x1="400" y1="100" x2="400" y2="400" stroke="url(#neonGlow)" stroke-width="4" stroke-dasharray="8 8"/>
+                        <circle cx="400" cy="250" r="35" fill="#0b0e14" stroke="url(#neonGlow)" stroke-width="3"/>
+                        <text x="388" y="258" fill="#fff" font-family="Orbitron" font-size="22" font-weight="bold">&amp;</text>
+
+                        <!-- Lado Direito: Arena Lan House Gamer -->
+                        <rect x="470" y="220" width="280" height="180" rx="10" fill="#151b26" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="490" y="250" fill="#06b6d4" font-family="Orbitron" font-weight="bold" font-size="18">eSPORTS ARENA</text>
+                        <!-- Monitor Gamer -->
+                        <rect x="500" y="270" width="130" height="85" rx="4" fill="#0284c7" opacity="0.8"/>
+                        <rect x="505" y="275" width="120" height="75" fill="#090d16"/>
+                        <!-- Conteúdo da Tela (Jogo) -->
+                        <polygon points="510,330 540,300 560,320 600,285 620,330" fill="#8b5cf6" opacity="0.7"/>
+                        <!-- Gabinete RGB -->
+                        <rect x="650" y="270" width="50" height="100" rx="4" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+                        <line x1="660" y1="280" x2="690" y2="280" stroke="#ec4899" stroke-width="3"/>
+                        <line x1="660" y1="295" x2="690" y2="295" stroke="#3b82f6" stroke-width="3"/>
+                        <line x1="660" y1="310" x2="690" y2="310" stroke="#10b981" stroke-width="3"/>
+
+                        <!-- Iluminação Geral Neon Topo -->
+                        <rect x="150" y="30" width="500" height="10" rx="5" fill="url(#neonGlow)"/>
+                        <text x="270" y="80" fill="#f8fafc" font-family="Orbitron" font-size="22" font-weight="900" letter-spacing="2">PIXEL &amp; BREW LOUNGE</text>
+                    </svg>
+
+                    <div class="p-4 bg-brand-card border-t border-slate-800 text-xs text-slate-400 flex justify-between items-center">
+                        <span><i class="fa-solid fa-location-dot text-brand-accent mr-1"></i> Rua dos Games, 1024 - Cyber District</span>
+                        <span class="text-brand-green font-code"><i class="fa-solid fa-wifi mr-1"></i> Wi-Fi 6 Giga Free</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE A CAFETERIA + LAN HOUSE -->
+    <section id="sobre" class="py-20 bg-brand-card/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-4">
+                    A FUSÃO DOS <span class="text-brand-accent">DOIS MUNDOS</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-brand-accent to-brand-cyan mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-300">
+                    Nascemos da necessidade de conectar a energia do café de alta qualidade ao ambiente competitivo dos eSports. Uma experiência única onde você não precisa escolher entre uma boa xícara de cappuccino e um ping ultra baixo.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- CARD 1 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-slate-800 hover:border-brand-accent/50 transition group">
+                    <div class="w-14 h-14 bg-brand-coffee/20 text-brand-coffee rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-3">Café Especial Gourmet</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Grãos 100% Arábica selecionados de produtores locais, moídos na hora por baristas profissionais. Bebidas quentes, geladas e snacks energéticos exclusivos.
+                    </p>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-slate-800 hover:border-brand-cyan/50 transition group">
+                    <div class="w-14 h-14 bg-brand-cyan/20 text-brand-cyan rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-3">Lan House & eSports</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Estações de trabalho e jogos equipadas com RTX 4080, monitores de 240Hz, periféricos mecânicos e rede dedicada com link de fibra redundante.
+                    </p>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="bg-brand-card p-8 rounded-2xl border border-slate-800 hover:border-brand-accent/50 transition group">
+                    <div class="w-14 h-14 bg-brand-accent/20 text-brand-accent rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-3">Comunidade & Events</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Salas de streaming equipadas, áreas de convivência para jogos de tabuleiro, viewing parties de campeonatos mundiais e torneios presenciais semanais.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CARDÁPIO TEMÁTICO GAMER -->
+    <section id="cardapio" class="py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-4">
+                MENU DE <span class="text-brand-coffee">RECHARGE & BUFFS</span>
+            </h2>
+            <p class="text-slate-400">Comidinhas e cafés temáticos preparados para manter seu FOCO no máximo nível.</p>
+            
+            <!-- FILTROS CARDÁPIO -->
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <button onclick="filterMenu('todos')" class="menu-btn active bg-brand-accent text-white px-5 py-2 rounded-lg text-sm font-semibold transition">Todos</button>
+                <button onclick="filterMenu('cafes')" class="menu-btn bg-brand-card text-slate-300 hover:bg-slate-800 border border-slate-800 px-5 py-2 rounded-lg text-sm font-semibold transition">Cafés & Potions</button>
+                <button onclick="filterMenu('lanches')" class="menu-btn bg-brand-card text-slate-300 hover:bg-slate-800 border border-slate-800 px-5 py-2 rounded-lg text-sm font-semibold transition">Lanches & Snacks</button>
+                <button onclick="filterMenu('doces')" class="menu-btn bg-brand-card text-slate-300 hover:bg-slate-800 border border-slate-800 px-5 py-2 rounded-lg text-sm font-semibold transition">Sobremesas</button>
+            </div>
+        </div>
+
+        <!-- GRID DE ITENS DO CARDÁPIO -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="menu-container">
+            
+            <!-- ITEM 1 -->
+            <div class="menu-item cafes bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-brand-coffee/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Espresso Overclock</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 9,50</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Espresso duplo extra forte com extrato denso de cacau 70% e pitada de canela. Para quem precisa zerar o sono.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-bolt text-yellow-500 mr-1"></i> Efeito: +100% Foco</span>
+                    <span class="bg-brand-coffee/10 text-brand-coffee px-2 py-0.5 rounded">Cafés</span>
+                </div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="menu-item cafes bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-brand-coffee/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Mana Potion Iced Latte</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 16,00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Café gelado batido com leite cremoso, xarope de baunilha azul natural e pedras de gelo de café.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-droplet text-brand-cyan mr-1"></i> Efeito: Refresh Instantâneo</span>
+                    <span class="bg-brand-coffee/10 text-brand-coffee px-2 py-0.5 rounded">Cafés</span>
+                </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="menu-item lanches bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-brand-accent/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Combo Combo Burger</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 32,00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Burger artesanal 180g, queijo cheddar derretido, bacon crocante no pão brioche selado na manteiga de café.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-utensils text-brand-accent mr-1"></i> Acompanha Batata CRT</span>
+                    <span class="bg-brand-accent/10 text-brand-accent px-2 py-0.5 rounded">Lanches</span>
+                </div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="menu-item lanches bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-brand-accent/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Toast Stealth Cheese</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 18,50</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Tostex triplo de queijo gouda, provolone e pesto de manjericão no pão de fermentação natural.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-leaf text-brand-green mr-1"></i> Opção Vegetariana</span>
+                    <span class="bg-brand-accent/10 text-brand-accent px-2 py-0.5 rounded">Lanches</span>
+                </div>
+            </div>
+
+            <!-- ITEM 5 -->
+            <div class="menu-item doces bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-pink-500/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Muffin Respawn</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 12,00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Muffin fofinho de mirtilo com recheio cremoso de chocolate branco e cobertura crocante.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-heart text-pink-500 mr-1"></i> Efeito: +50 HP Doce</span>
+                    <span class="bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded">Sobremesas</span>
+                </div>
+            </div>
+
+            <!-- ITEM 6 -->
+            <div class="menu-item doces bg-brand-card rounded-xl border border-slate-800 p-6 flex flex-col justify-between hover:border-pink-500/50 transition">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-orbitron font-bold text-lg text-white">Brownie 8-Bit Pixel</h4>
+                        <span class="text-brand-coffee font-code font-bold">R$ 14,00</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Brownie de chocolate meio amargo cortado em formato geométrico com sorvete de baunilha e calda quente.</p>
+                </div>
+                <div class="flex justify-between items-center text-xs font-code text-slate-500 pt-4 border-t border-slate-800">
+                    <span><i class="fa-solid fa-ice-cream text-pink-400 mr-1"></i> Serve 1 pessoa</span>
+                    <span class="bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded">Sobremesas</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEÇÃO ARENA / LAN HOUSE & PREÇOS -->
+    <section id="arena" class="py-20 bg-brand-card/30 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12">
+                <div>
+                    <div class="text-brand-cyan font-code text-sm font-semibold mb-2">SETUP HIGH-END</div>
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white">
+                        ESPECIFICAÇÕES DA <span class="text-brand-cyan">LAN HOUSE</span>
+                    </h2>
+                </div>
+                <p class="text-slate-400 max-w-md mt-4 lg:mt-0 text-sm">
+                    Máquinas calibradas para o cenário competitivo, periféricos premium e cadeiras ergonômicas para longas sessões de gameplay.
+                </p>
+            </div>
+
+            <!-- ESPECIFICAÇÕES TÉCNICAS -->
+            <div class="grid md:grid-cols-4 gap-4 mb-12">
+                <div class="bg-brand-card p-5 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-microchip text-brand-cyan text-2xl mb-3"></i>
+                    <div class="text-xs text-slate-500">PROCESSADOR</div>
+                    <div class="font-orbitron font-bold text-white text-base">Intel Core i9 14900K</div>
+                </div>
+                <div class="bg-brand-card p-5 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-vr-cardboard text-brand-accent text-2xl mb-3"></i>
+                    <div class="text-xs text-slate-500">PLACA DE VÍDEO</div>
+                    <div class="font-orbitron font-bold text-white text-base">NVIDIA RTX 4080 Super</div>
+                </div>
+                <div class="bg-brand-card p-5 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-tv text-brand-coffee text-2xl mb-3"></i>
+                    <div class="text-xs text-slate-500">MONITORES</div>
+                    <div class="font-orbitron font-bold text-white text-base">240Hz 0.5ms IPS 27"</div>
+                </div>
+                <div class="bg-brand-card p-5 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-chair text-brand-green text-2xl mb-3"></i>
+                    <div class="text-xs text-slate-500">CONFORTO</div>
+                    <div class="font-orbitron font-bold text-white text-base">Cadeiras Herman Miller</div>
+                </div>
+            </div>
+
+            <!-- TABELA DE PASSAPORTES / PLANOS -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- PLANO 1 -->
+                <div class="bg-brand-card rounded-2xl p-8 border border-slate-800 relative flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-orbitron text-xl font-bold text-white mb-2">Passe Casual</h3>
+                        <p class="text-slate-400 text-xs mb-6">Ideal para partidas rápidas ou navegar tomando um café.</p>
+                        <div class="text-3xl font-orbitron font-extrabold text-white mb-6">
+                            R$ 15 <span class="text-xs text-slate-400 font-sans font-normal">/ hora</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-green"></i> Acesso aos PCs Pro Arena</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-green"></i> Todos os jogos instalados</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-green"></i> Wi-Fi de alta velocidade</li>
+                        </ul>
+                    </div>
+                    <a href="#reserva" class="w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl transition">Reservar Hora</a>
+                </div>
+
+                <!-- PLANO 2 (DESTAQUE) -->
+                <div class="bg-brand-card rounded-2xl p-8 border-2 border-brand-cyan relative flex flex-col justify-between shadow-xl glow-cyan">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-cyan text-slate-950 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                        MAIS POPULAR
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron text-xl font-bold text-white mb-2">Corujao eSports</h3>
+                        <p class="text-slate-400 text-xs mb-6">Sessão intensa de 5 horas continuas.</p>
+                        <div class="text-3xl font-orbitron font-extrabold text-white mb-6">
+                            R$ 55 <span class="text-xs text-slate-400 font-sans font-normal">/ 5 horas</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Acesso a todos os PCs VIP</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> <strong>1 Café Espresso Overclock grátis</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Headset Pro Isolamento Acústico</li>
+                        </ul>
+                    </div>
+                    <a href="#reserva" class="w-full text-center bg-brand-cyan hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg">Reservar Corujão</a>
+                </div>
+
+                <!-- PLANO 3 -->
+                <div class="bg-brand-card rounded-2xl p-8 border border-slate-800 relative flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-orbitron text-xl font-bold text-white mb-2">Booth Squad VIP</h3>
+                        <p class="text-slate-400 text-xs mb-6">Sala privativa para times de até 5 jogadores.</p>
+                        <div class="text-3xl font-orbitron font-extrabold text-white mb-6">
+                            R$ 180 <span class="text-xs text-slate-400 font-sans font-normal">/ 3 horas</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Sala Privativa com isolamento</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Servidor local exclusivo</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-accent"></i> Atendimento de garçom no booth</li>
+                        </ul>
+                    </div>
+                    <a href="#reserva" class="w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-xl transition">Reservar Squad</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TORNEIOS E EVENTOS -->
+    <section id="torneios" class="py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-4">
+                PRÓXIMOS <span class="text-brand-accent">TORNEIOS</span> & EVENTOS
+            </h2>
+            <p class="text-slate-400">Monte seu time, peça seu café e dispute premiações em dinheiro e troféus.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- TORNEIO 1 -->
+            <div class="bg-brand-card border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row gap-6 items-center hover:border-brand-accent transition">
+                <div class="bg-brand-dark p-6 rounded-xl border border-slate-800 text-center min-w-[120px]">
+                    <span class="block font-orbitron text-2xl font-black text-brand-accent">SÁB</span>
+                    <span class="text-xs text-slate-400 font-code">24 OUT - 14H</span>
+                </div>
+                <div>
+                    <span class="bg-red-500/10 text-red-400 text-xs px-2 py-0.5 rounded font-code">VALORANT 5v5</span>
+                    <h3 class="font-orbitron text-xl font-bold text-white mt-1 mb-2">Championship Pixel Cup #12</h3>
+                    <p class="text-slate-400 text-sm mb-3">Premiação: R$ 1.500,00 + Kit Grãos Pixel Brew.</p>
+                    <span class="text-xs text-slate-500"><i class="fa-solid fa-ticket mr-1"></i> Inscrição: R$ 50/time</span>
+                </div>
+            </div>
+
+            <!-- TORNEIO 2 -->
+            <div class="bg-brand-card border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row gap-6 items-center hover:border-brand-cyan transition">
+                <div class="bg-brand-dark p-6 rounded-xl border border-slate-800 text-center min-w-[120px]">
+                    <span class="block font-orbitron text-2xl font-black text-brand-cyan">DOM</span>
+                    <span class="text-xs text-slate-400 font-code">25 OUT - 16H</span>
+                </div>
+                <div>
+                    <span class="bg-blue-500/10 text-blue-400 text-xs px-2 py-0.5 rounded font-code">LEAGUE OF LEGENDS</span>
+                    <h3 class="font-orbitron text-xl font-bold text-white mt-1 mb-2">X1 de Mid Lane Arena</h3>
+                    <p class="text-slate-400 text-sm mb-3">Premiação: RP + 1 Mês de Passaporte Gamer Grátis.</p>
+                    <span class="text-xs text-slate-500"><i class="fa-solid fa-ticket mr-1"></i> Inscrição: R$ 15/jogador</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULÁRIO DE RESERVA SIMULADO -->
+    <section id="reserva" class="py-20 bg-brand-card/50 border-t border-slate-800">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="bg-brand-card p-8 sm:p-10 rounded-2xl border border-slate-800 shadow-2xl">
+                <div class="text-center mb-8">
+                    <h2 class="font-orbitron text-2xl sm:text-3xl font-bold text-white mb-2">RESERVE SUA ESTAÇÃO</h2>
+                    <p class="text-slate-400 text-sm">Garanta seu PC Gamer e sua mesa de café antes de chegar.</p>
+                </div>
+
+                <form id="booking-form" onsubmit="handleBooking(event)" class="space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-code text-slate-400 mb-1">NOME COMPLETO</label>
+                            <input type="text" required class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm" placeholder="Seu nome">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-code text-slate-400 mb-1">E-MAIL OU DISCORD</label>
+                            <input type="text" required class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm" placeholder="usuario#0000">
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-code text-slate-400 mb-1">PLANO DESEJADO</label>
+                            <select class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm">
+                                <option>Passe Casual (1h)</option>
+                                <option>Corujão eSports (5h)</option>
+                                <option>Booth Squad VIP (3h)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-code text-slate-400 mb-1">DATA</label>
+                            <input type="date" required class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-code text-slate-400 mb-1">HORÁRIO</label>
+                            <input type="time" required class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-code text-slate-400 mb-1">OBSERVAÇÕES OU PEDIDO ANTECIPADO DE CAFÉ</label>
+                        <textarea rows="3" class="w-full bg-brand-dark border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition text-sm" placeholder="Ex: Deixar um Espresso Overclock pronto na mesa..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-brand-accent to-brand-cyan text-white font-bold py-4 rounded-xl shadow-lg glow-purple hover:opacity-90 transition mt-4">
+                        <i class="fa-solid fa-check-circle mr-2"></i> Confirmar Agendamento
+                    </button>
+                </form>
+
+                <!-- MENSAGEM DE SUCESSO -->
+                <div id="booking-success" class="hidden mt-6 bg-brand-green/20 border border-brand-green text-brand-green p-4 rounded-xl text-center text-sm font-code">
+                    <i class="fa-solid fa-circle-check text-xl mb-1 block"></i>
+                    Reserva confirmada com sucesso! Enviamos os detalhes para o seu e-mail/Discord.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-brand-dark border-t border-slate-800 py-12 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 bg-brand-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">P&B</div>
+                    <span class="font-orbitron font-bold text-lg text-white">PIXEL & BREW</span>
+                </div>
+                <p class="text-slate-400 text-xs leading-relaxed">
+                    A primeira cafeteria gamer e-Sports lounge da região. O ponto de encontro para quem aprecia café de alta qualidade e jogos competitivos.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-orbitron font-bold text-white text-sm mb-4">HORÁRIO DE FUNCIONAMENTO</h4>
+                <ul class="text-xs text-slate-400 space-y-2 font-code">
+                    <li>Seg - Qui: 08h00 - 23h00</li>
+                    <li>Sexta: 08h00 - 04h00 (Corujão)</li>
+                    <li>Sáb - Dom: 10h00 - 04h00</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-orbitron font-bold text-white text-sm mb-4">CONTATO & REDES</h4>
+                <ul class="text-xs text-slate-400 space-y-2">
+                    <li><i class="fa-brands fa-discord text-brand-accent mr-2"></i> discord.gg/pixelbrew</li>
+                    <li><i class="fa-brands fa-instagram text-pink-500 mr-2"></i> @pixelandbrew</li>
+                    <li><i class="fa-solid fa-envelope text-brand-cyan mr-2"></i> contato@pixelbrew.com.br</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-orbitron font-bold text-white text-sm mb-4">PROJETO ESCOLAR</h4>
+                <p class="text-xs text-slate-400 mb-3">
+                    Este site é um projeto conceitual desenvolvido para fins acadêmicos.
+                </p>
+                <button onclick="toggleModalAcademic()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded border border-slate-700">
+                    <i class="fa-solid fa-info-circle mr-1"></i> Ficha Técnica do Trabalho
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <p>© 2026 Pixel & Brew Gaming Café. Todos os direitos reservados.</p>
+            <p class="mt-2 sm:mt-0 font-code">Desenvolvido com HTML5, Tailwind CSS e JS</p>
+        </div>
+    </footer>
+
+    <!-- MODAL ACADÊMICO / FICHA DO TRABALHO -->
+    <div id="modal-academic" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card max-w-2xl w-full rounded-2xl border border-brand-accent p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleModalAcademic()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4">
+                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h3 class="font-orbitron font-bold text-xl text-white">Ficha de Apresentação do Trabalho</h3>
+                    <p class="text-xs text-indigo-300 font-code">DOCUMENTAÇÃO DO PROJETO ESCOLAR / ACADÊMICO</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm">
+                <div class="grid sm:grid-cols-2 gap-4 bg-brand-dark p-4 rounded-xl border border-slate-800">
+                    <div>
+                        <span class="text-xs text-slate-500 font-code block">TITULO DO PROJETO:</span>
+                        <strong class="text-white">Pixel & Brew - Cafeteria Gamer</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 font-code block">DISCIPLINA / CURSO:</span>
+                        <strong class="text-white">Desenvolvimento Web / Design</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 font-code block">ALUNOS / AUTORES:</span>
+                        <strong class="text-white">Grupo de Projetos Integrados</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 font-code block">PROFESSOR / ORIENTADOR:</span>
+                        <strong class="text-white">Docente da Disciplina</strong>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-orbitron font-bold text-brand-cyan text-sm mb-2">OBJETIVOS DO TRABALHO:</h4>
+                    <ul class="list-disc list-inside text-slate-300 text-xs space-y-1">
+                        <li>Criar um plano conceitual e website funcional para um estabelecimento híbrido (Cafeteria + Lan House).</li>
+                        <li>Desenvolver uma interface responsiva focada no público jovem/gamer com estética Dark Neon.</li>
+                        <li>Implementar seções interativas: menu filtrável, simulação de reservas e calendário de eventos.</li>
+                        <li>Demonstrar a aplicação prática das tecnologias HTML, CSS (Tailwind) e JavaScript.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-orbitron font-bold text-brand-accent text-sm mb-2">REQUISITOS TÉCNICOS ATENDIDOS:</h4>
+                    <div class="flex flex-wrap gap-2 text-xs font-code">
+                        <span class="bg-slate-800 text-slate-300 px-2 py-1 rounded">Layout Responsivo</span>
+                        <span class="bg-slate-800 text-slate-300 px-2 py-1 rounded">Vetor SVG Customizado</span>
+                        <span class="bg-slate-800 text-slate-300 px-2 py-1 rounded">Filtros Dinâmicos em JS</span>
+                        <span class="bg-slate-800 text-slate-300 px-2 py-1 rounded">Dark Mode Theme</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-800 text-right">
+                <button onclick="toggleModalAcademic()" class="bg-brand-accent text-white px-6 py-2 rounded-lg text-sm font-semibold hover:opacity-90">
+                    Fechar Janela
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DE INTERATIVIDADE -->
+    <script>
+        // Toggle do Menu Mobile
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars';
+            } else {
+                icon.className = 'fa-solid fa-xmark';
+            }
+        }
+
+        // Modal Acadêmico
+        function toggleModalAcademic() {
+            const modal = document.getElementById('modal-academic');
+            modal.classList.toggle('hidden');
+        }
+
+        // Filtro do Cardápio em JS
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const buttons = document.querySelectorAll('.menu-btn');
+
+            // Atualiza estado visual dos botões
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-accent', 'text-white');
+                btn.classList.add('bg-brand-card', 'text-slate-300');
+            });
+
+            event.currentTarget.classList.remove('bg-brand-card', 'text-slate-300');
+            event.currentTarget.classList.add('bg-brand-accent', 'text-white');
+
+            // Mostra / Esconde os itens
+            items.forEach(item => {
+                if (category === 'todos' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Simulação do Form de Agendamento
+        function handleBooking(event) {
+            event.preventDefault();
+            const form = document.getElementById('booking-form');
+            const successMsg = document.getElementById('booking-success');
+
+            form.reset();
+            successMsg.classList.remove('hidden');
+
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
