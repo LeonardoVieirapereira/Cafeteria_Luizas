@@ -1,933 +1,475 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pixel & Brew | Gaming Café</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --bg: #080b13;
-  --card: #121827;
-  --purple: #a855f7;
-  --cyan: #06e5ff;
-  --pink: #ff38cf;
-  --green: #10f5a0;
-}
-
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: #f8fafc;
-  font-family: "Plus Jakarta Sans", sans-serif;
-  overflow-x: hidden;
-}
-
-h1, h2, h3, .logo {
-  font-family: Orbitron, sans-serif;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background-image:
-    linear-gradient(#a855f708 1px, transparent 1px),
-    linear-gradient(90deg, #06e5ff08 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-.neon {
-  box-shadow: 0 0 12px #a855f755,
-              0 0 35px #a855f722;
-}
-
-.neon-text {
-  text-shadow: 0 0 10px var(--purple),
-               0 0 25px #a855f788;
-}
-
-.cyan-text {
-  color: var(--cyan);
-  text-shadow: 0 0 12px #06e5ff99;
-}
-
-.gradient-text {
-  background: linear-gradient(90deg, var(--purple), var(--cyan));
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: #080b13eF;
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid #a855f744;
-}
-
-.nav-inner {
-  max-width: 1200px;
-  margin: auto;
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.logo {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.links {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.links a:hover {
-  color: var(--cyan);
-  text-shadow: 0 0 12px var(--cyan);
-}
-
-.btn {
-  display: inline-block;
-  padding: 13px 22px;
-  border: 1px solid var(--purple);
-  border-radius: 12px;
-  background: linear-gradient(110deg, #9333ea, #2563eb);
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 0 25px #a855f799;
-}
-
-section {
-  padding: 90px 22px;
-  max-width: 1250px;
-  margin: auto;
-}
-
-.hero {
-  min-height: 85vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 50px;
-}
-
-.hero h1 {
-  font-size: clamp(35px, 5vw, 65px);
-  line-height: 1.15;
-  margin: 22px 0;
-}
-
-.hero p {
-  color: #aab4c8;
-  line-height: 1.9;
-}
-
-.eyebrow {
-  display: inline-block;
-  color: var(--cyan);
-  border: 1px solid #06e5ff55;
-  background: #06e5ff0c;
-  border-radius: 30px;
-  padding: 9px 15px;
-  font-size: 12px;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: .65; }
-  50% { opacity: 1; }
-}
-
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(500%); }
-}
-
-@keyframes entrance {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.reveal {
-  animation: entrance 1s ease both;
-}
-
-.scene {
-  perspective: 1000px;
-}
-
-.facade {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.35;
-  background: linear-gradient(145deg, #192338, #090c15);
-  border: 1px solid #a855f788;
-  border-radius: 20px;
-  overflow: hidden;
-  transform: rotateY(-5deg) rotateX(2deg);
-  box-shadow: 0 0 45px #a855f722;
-}
-
-.facade::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(transparent, #06e5ff0b, transparent);
-  animation: scan 7s linear infinite;
-}
-
-.roof {
-  position: absolute;
-  top: 8%;
-  left: 7%;
-  width: 86%;
-  height: 10%;
-  background: #28354b;
-  border: 2px solid #06e5ff;
-  box-shadow: 0 0 20px #06e5ff66;
-}
-
-.storefront {
-  position: absolute;
-  top: 22%;
-  left: 7%;
-  width: 86%;
-  height: 62%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 8px;
-  background: #101726;
-  border: 2px solid #8b5cf6;
-}
-
-.window {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #142b49, #080b13);
-  border: 1px solid #06e5ff99;
-}
-
-.window::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg, transparent 0 35px, #06e5ff22 36px 38px
-  );
-}
-
-.sign {
-  position: absolute;
-  top: 7%;
-  left: 10%;
-  right: 10%;
-  text-align: center;
-  padding: 8px 3px;
-  font-family: Orbitron, sans-serif;
-  font-size: clamp(10px, 2vw, 18px);
-  color: white;
-  border: 1px solid var(--cyan);
-  background: #080b13;
-  text-shadow: 0 0 12px var(--cyan);
-  box-shadow: 0 0 15px #06e5ff55;
-}
-
-.door {
-  position: absolute;
-  bottom: 0;
-  left: 40%;
-  width: 25%;
-  height: 60%;
-  background: linear-gradient(90deg, #15243b, #243b5a);
-  border: 2px solid #06e5ff;
-}
-
-.door::after {
-  content: "";
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  width: 5px;
-  height: 5px;
-  background: var(--pink);
-  box-shadow: 0 0 10px var(--pink);
-}
-
-.sidewalk {
-  position: absolute;
-  bottom: 4%;
-  left: 0;
-  width: 100%;
-  height: 10%;
-  background: repeating-linear-gradient(
-    90deg, #1e293b 0 50px, #334155 51px 53px
-  );
-  transform: perspective(200px) rotateX(12deg);
-}
-
-.facade-label {
-  position: absolute;
-  bottom: 16%;
-  left: 0;
-  right: 0;
-  text-align: center;
-  color: var(--cyan);
-  font-family: monospace;
-  font-size: 11px;
-}
-
-.section-title {
-  font-size: clamp(26px, 4vw, 42px);
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.section-subtitle {
-  color: #9ca3af;
-  text-align: center;
-  max-width: 650px;
-  margin: 0 auto 45px;
-  line-height: 1.8;
-}
-
-.card {
-  background: linear-gradient(145deg, #151d2d, #0c111d);
-  border: 1px solid #293449;
-  border-radius: 18px;
-  padding: 25px;
-  transition: .35s;
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  border-color: var(--purple);
-  box-shadow: 0 0 28px #a855f722;
-}
-
-.card-icon {
-  color: var(--cyan);
-  font-size: 28px;
-  margin-bottom: 18px;
-}
-
-.price {
-  color: #fbbf24;
-  font-family: Orbitron, sans-serif;
-  font-weight: 700;
-}
-
-.menu-btn {
-  border: 1px solid #334155;
-  border-radius: 9px;
-  padding: 9px 15px;
-  background: #151b26;
-  cursor: pointer;
-}
-
-.menu-btn.active {
-  background: var(--purple);
-  border-color: var(--purple);
-  color: white;
-}
-
-.floor-plan {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  min-height: 350px;
-  padding: 18px;
-  background: #080b13;
-  border: 2px solid var(--cyan);
-  border-radius: 16px;
-  box-shadow: 0 0 25px #06e5ff22;
-  perspective: 900px;
-}
-
-.room {
-  position: relative;
-  min-height: 150px;
-  border: 1px solid #a855f799;
-  background: linear-gradient(145deg, #1d2940, #101522);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: .3s;
-  overflow: hidden;
-}
-
-.room:hover {
-  transform: translateZ(12px) scale(1.02);
-  border-color: var(--cyan);
-  box-shadow: 0 0 20px #06e5ff55;
-}
-
-.room i {
-  font-size: 30px;
-  color: var(--cyan);
-}
-
-.room small {
-  color: #aab4c8;
-}
-
-.room.active {
-  border-color: var(--green);
-  box-shadow: inset 0 0 25px #10f5a022, 0 0 15px #10f5a044;
-}
-
-.room-detail {
-  min-height: 90px;
-  padding: 18px;
-  background: #121827;
-  border: 1px solid #334155;
-  border-radius: 12px;
-  margin-top: 14px;
-}
-
-form input, form select, form textarea {
-  width: 100%;
-  background: #080b13;
-  border: 1px solid #334155;
-  padding: 12px;
-  color: white;
-  border-radius: 9px;
-  outline: none;
-}
-
-form input:focus, form select:focus, form textarea:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 12px #06e5ff22;
-}
-
-label {
-  display: block;
-  font-size: 12px;
-  color: #9ca3af;
-  margin-bottom: 6px;
-}
-
-footer {
-  border-top: 1px solid #293449;
-  padding: 35px 22px;
-  text-align: center;
-  color: #94a3b8;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: #000d;
-  backdrop-filter: blur(10px);
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  width: min(600px, 100%);
-  max-height: 85vh;
-  overflow: auto;
-  background: #121827;
-  border: 1px solid var(--purple);
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 0 35px #a855f744;
-}
-
-@media (max-width: 768px) {
-  .links { display: none; }
-  .hero { grid-template-columns: 1fr; }
-  .floor-plan { grid-template-columns: 1fr 1fr; }
-  section { padding: 65px 18px; }
-  .facade { transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel & Brew - Cafeteria Gamer & Lan House</title>
+    <!-- Script do Three.js para renderização da Projeção 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        :root {
+            --bg-color: #0d0f12;
+            --card-bg: #161b22;
+            --accent-green: #00ff66;
+            --accent-purple: #9d4edd;
+            --text-color: #f0f6fc;
+            --text-dim: #8b949e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header e Navegação */
+        header {
+            background: linear-gradient(135deg, #161b22 0%, #0d0f12 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+        }
+
+        header p {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        nav {
+            background: #161b22;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 1rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #30363d;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background: var(--accent-purple);
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+        }
+
+        h2 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--accent-purple);
+            padding-bottom: 5px;
+        }
+
+        /* Área do Canvas 3D */
+        #canvas-container {
+            width: 100%;
+            height: 400px;
+            background-color: #050505;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--accent-purple);
+        }
+
+        #canvas3d {
+            width: 100%;
+            height: 100%;
+        }
+
+        .controls-hint {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: var(--accent-green);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        /* Galeria de Imagens */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            background: #21262d;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .gallery-item p {
+            padding: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* Cardápio Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .menu-card {
+            background: #21262d;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .menu-card h4 {
+            color: var(--accent-green);
+        }
+
+        .menu-card span {
+            display: block;
+            margin-top: 8px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Formulário de Reserva */
+        form {
+            display: grid;
+            gap: 15px;
+            max-width: 500px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #30363d;
+            background: #21262d;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        button {
+            background: var(--accent-green);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: var(--accent-purple);
+            color: #fff;
+        }
+
+        /* Ficha do Trabalho Escola/Universidade */
+        .trabalho-info {
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #58a6ff;
+            border: 1px dashed var(--accent-purple);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #161b22;
+            color: var(--text-dim);
+            border-top: 1px solid #30363d;
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="logo">
-      <i class="fa-solid fa-mug-hot gradient-text"></i>
-      PIXEL<span class="cyan-text">&</span>BREW
-    </a>
+    <header>
+        <h1>🎮 Pixel & Brew ☕</h1>
+        <p>A Fusão Perfeita Entre Café de Alta Qualidade & Alta Performance Gamer</p>
+    </header>
 
-    <div class="links">
-      <a href="#sobre">Sobre</a>
-      <a href="#cardapio">Cardápio</a>
-      <a href="#arena">Arena 3D</a>
-      <a href="#torneios">Torneios</a>
-      <a href="#reserva" class="btn">Reservar PC</a>
+    <nav>
+        <a href="#projeção3d">Projeção 3D</a>
+        <a href="#conceito">Sobre o Espaço</a>
+        <a href="#cardapio">Cardápio & Menu</a>
+        <a href="#reserva">Reserva de PCs</a>
+        <a href="#trabalho">Ficha do Trabalho</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- Seção Projeção 3D Interativa -->
+        <section id="projeção3d">
+            <h2>1. Projeção 3D Interativa do Ambiente</h2>
+            <p style="margin-bottom: 10px;">Interaja com o modelo tridimensional abaixo para visualizar a integração entre a área de Café/Balcão (à esquerda em luz morna) e a Arena Gamer/Lan House (à direita em iluminação neon RGB).</p>
+            
+            <div id="canvas-container">
+                <canvas id="canvas3d"></canvas>
+                <div class="controls-hint">💡 Arraste com o mouse para girar e use a rodinha para dar zoom</div>
+            </div>
+        </section>
+
+        <!-- Seção Sobre o Conceito -->
+        <section id="conceito">
+            <h2>2. Conceito da Cafeteria Gamer</h2>
+            <p>O <strong>Pixel & Brew</strong> foi projetado para unir dois universos apaixonantes: a cultura do café especial e a alta performance dos eSports. Nosso ambiente é dividido em duas áreas integradas:</p>
+            <br>
+            <ul>
+                <li>☕ <strong>Espaço Café:</strong> Ambiente acolhedor com mesas de madeira, luz aconchegante, tomadas em todas as bancadas e grãos selecionados para estudo e trabalho.</li>
+                <li>🎧 <strong>Arena Lan House:</strong> Estações gamer de última geração com monitores de 240Hz, cadeiras ergonômicas, iluminação neon RGB personalizável e conexão de fibra dedicada.</li>
+            </ul>
+
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80" alt="Café">
+                    <p>Área de Barista & Café Aconchegante</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80" alt="Lan House Gamer">
+                    <p>Arena Gamer com Setups RGB</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Cardápio -->
+        <section id="cardapio">
+            <h2>3. Cardápio Temático</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h4>Espresso Overclock</h4>
+                    <p>Dose tripla de espresso com toque de canela e cacau 70%.</p>
+                    <span>R$ 12,00</span>
+                </div>
+                <div class="menu-card">
+                    <h4>Cappuccino RGB</h4>
+                    <p>Cappuccino tradicional finalizado com xarope natural colorido.</p>
+                    <span>R$ 15,00</span>
+                </div>
+                <div class="menu-card">
+                    <h4>Potion de HP (Soda)</h4>
+                    <p>Soda artesanal de frutas vermelhas com xarope de maçã verde.</p>
+                    <span>R$ 14,00</span>
+                </div>
+                <div class="menu-card">
+                    <h4>Waffle 8-Bits</h4>
+                    <p>Waffle crocante acompanhado de geleia e sorvete artesanal.</p>
+                    <span>R$ 18,00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Reserva -->
+        <section id="reserva">
+            <h2>4. Reserve Sua Estação Gamer</h2>
+            <form onsubmit="alert('Reserva efetuada com sucesso!'); return false;">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" required placeholder="Digite seu nome">
+
+                <label for="tipo">Selecione a Estação:</label>
+                <select id="tipo">
+                    <option>PC Gamer VIP (RTX 4080 / Monitor 240Hz)</option>
+                    <option>PC Gamer Standard (RTX 3060 / Monitor 144Hz)</option>
+                    <option>Console Station (PS5 / Xbox Series X)</option>
+                </select>
+
+                <label for="horas">Tempo de Jogo:</label>
+                <input type="number" id="horas" min="1" max="12" value="2">
+
+                <button type="submit">Confirmar Reserva</button>
+            </form>
+        </section>
+
+        <!-- Seção Trabalho Escolar -->
+        <section id="trabalho">
+            <h2>5. Ficha de Apresentação do Trabalho</h2>
+            <div class="trabalho-info">
+                <p><strong>PROJETO:</strong> Modelo de Negócio - Cafeteria & Lan House</p>
+                <p><strong>NOME DA EMPRESA:</strong> Pixel & Brew Co.</p>
+                <p><strong>DISCIPLINA / TEMA:</strong> Criação e Desenvolvimento Web (HTML5, CSS3, JS & 3D Canvas)</p>
+                <p><strong>INTEGRANTES DO GRUPO:</strong> [Seu Nome / Nomes dos Integrantes]</p>
+                <p><strong>TURMA / ANO:</strong> 2026 - Ensino Médio / Faculdade</p>
+            </div>
+        </section>
+
     </div>
 
-    <button onclick="toggleMobileMenu()" class="md:hidden text-2xl" aria-label="Abrir menu">
-      <i id="menu-icon" class="fa-solid fa-bars"></i>
-    </button>
-  </div>
+    <footer>
+        <p>&copy; 2026 Pixel & Brew - Projeto Escolar / Acadêmico</p>
+    </footer>
 
-  <div id="mobile-menu" class="hidden px-5 pb-5 space-y-4">
-    <a class="block" href="#sobre" onclick="toggleMobileMenu()">Sobre</a>
-    <a class="block" href="#cardapio" onclick="toggleMobileMenu()">Cardápio</a>
-    <a class="block" href="#arena" onclick="toggleMobileMenu()">Arena 3D</a>
-    <a class="block" href="#torneios" onclick="toggleMobileMenu()">Torneios</a>
-    <a class="block text-cyan-300" href="#reserva" onclick="toggleMobileMenu()">Reservar PC</a>
-  </div>
-</nav>
+    <!-- Script JavaScript para Construção da Projeção 3D -->
+    <script>
+        // Configuração básica do Three.js
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0c10);
 
-<section class="hero">
-  <div class="reveal">
-    <span class="eyebrow">
-      <i class="fa-solid fa-circle text-green-400 mr-2"></i>
-      CAFÉ ESPECIAL + GAMING
-    </span>
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 12, 22);
 
-    <h1>
-      ONDE O <span class="gradient-text neon-text">CAFÉ</span>
-      ENCONTRA O <span class="cyan-text">FPS.</span>
-    </h1>
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas3d'), antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
 
-    <p class="mb-8">
-      Café de qualidade, setups poderosos e uma atmosfera neon
-      para estudar, jogar e encontrar sua equipe.
-      Bem-vindo ao Pixel & Brew.
-    </p>
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
 
-    <div class="flex flex-wrap gap-4">
-      <a href="#arena" class="btn">
-        <i class="fa-solid fa-cube mr-2"></i>Explorar espaço 3D
-      </a>
-      <a href="#cardapio" class="btn" style="background:#121827;border-color:#334155">
-        <i class="fa-solid fa-mug-hot mr-2"></i>Ver cardápio
-      </a>
-    </div>
+        // Iluminação
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
 
-    <div class="grid grid-cols-3 gap-4 mt-10">
-      <div><strong class="cyan-text text-2xl">240Hz</strong><p class="text-xs text-slate-400">Monitores</p></div>
-      <div><strong class="gradient-text text-2xl">RGB</strong><p class="text-xs text-slate-400">Iluminação</p></div>
-      <div><strong class="text-amber-400 text-2xl">100%</strong><p class="text-xs text-slate-400">Experiência gamer</p></div>
-    </div>
-  </div>
+        // Luz Quente (Lado do Café)
+        const warmLight = new THREE.PointLight(0xffaa44, 2, 20);
+        warmLight.position.set(-6, 5, 0);
+        scene.add(warmLight);
 
-  <div class="scene float">
-    <div class="facade">
-      <div class="roof"></div>
-      <div class="sign">PIXEL & BREW</div>
-      <div class="storefront">
-        <div class="window">
-          <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-amber-700/20"></div>
-          <div class="absolute bottom-2 left-2 text-amber-400 text-xs">COFFEE BAR</div>
-          <div class="absolute bottom-9 left-1/2 -translate-x-1/2 text-4xl text-amber-300">
-            <i class="fa-solid fa-mug-hot"></i>
-          </div>
-        </div>
-        <div class="window">
-          <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-purple-500/20"></div>
-          <div class="absolute bottom-2 left-2 text-cyan-300 text-xs">ESPORTS ARENA</div>
-          <div class="absolute bottom-9 left-1/2 -translate-x-1/2 text-4xl text-cyan-300">
-            <i class="fa-solid fa-desktop"></i>
-          </div>
-        </div>
-      </div>
-      <div class="door"></div>
-      <div class="sidewalk"></div>
-      <div class="facade-label">FACHADA CONCEITUAL • VISTA EXTERNA</div>
-    </div>
-  </div>
-</section>
-<section id="sobre">
-  <h2 class="section-title">DOIS MUNDOS, <span class="gradient-text">UMA EXPERIÊNCIA</span></h2>
-  <p class="section-subtitle">Uma cafeteria moderna com conforto, tecnologia e uma comunidade gamer.</p>
+        // Luz Neon Verde/Roxa (Lado Gamer)
+        const greenLight = new THREE.PointLight(0x00ff66, 2, 20);
+        greenLight.position.set(6, 5, -2);
+        scene.add(greenLight);
 
-  <div class="grid md:grid-cols-3 gap-6">
-    <article class="card">
-      <i class="fa-solid fa-mug-hot card-icon"></i>
-      <h3 class="text-xl font-bold mb-3">Café Especial</h3>
-      <p class="text-slate-400 text-sm leading-7">Espresso, cappuccino, cafés gelados e bebidas temáticas preparados para acompanhar suas sessões.</p>
-    </article>
+        const purpleLight = new THREE.PointLight(0x9d4edd, 2, 20);
+        purpleLight.position.set(6, 5, 2);
+        scene.add(purpleLight);
 
-    <article class="card">
-      <i class="fa-solid fa-computer card-icon"></i>
-      <h3 class="text-xl font-bold mb-3">Arena Gamer</h3>
-      <p class="text-slate-400 text-sm leading-7">Estações de alto desempenho, monitores rápidos, periféricos profissionais e iluminação RGB.</p>
-    </article>
+        // Chão do Ambiente
+        const floorGeo = new THREE.PlaneGeometry(20, 14);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x1a1d24, roughness: 0.8 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        scene.add(floor);
 
-    <article class="card">
-      <i class="fa-solid fa-users card-icon"></i>
-      <h3 class="text-xl font-bold mb-3">Comunidade</h3>
-      <p class="text-slate-400 text-sm leading-7">Encontre seu squad, participe de torneios e acompanhe eventos especiais.</p>
-    </article>
-  </div>
-</section>
+        // Paredes
+        const wallMat = new THREE.MeshStandardMaterial({ color: 0x111318 });
+        const backWall = new THREE.Mesh(new THREE.PlaneGeometry(20, 6), wallMat);
+        backWall.position.set(0, 3, -7);
+        scene.add(backWall);
 
-<section id="cardapio">
-  <h2 class="section-title">MENU DE <span style="color:#fbbf24">RECHARGE</span></h2>
-  <p class="section-subtitle">Escolha sua próxima bebida ou seu lanche favorito.</p>
+        // --- LADO ESQUERDO: CAFETERIA ---
+        // Balcão do Café
+        const counterGeo = new THREE.BoxGeometry(6, 1.8, 2);
+        const counterMat = new THREE.MeshStandardMaterial({ color: 0x5c3a21 });
+        const counter = new THREE.Mesh(counterGeo, counterMat);
+        counter.position.set(-6, 0.9, -4);
+        scene.add(counter);
 
-  <div class="flex flex-wrap justify-center gap-3 mb-8">
-    <button class="menu-btn active" onclick="filterMenu('todos',this)">Todos</button>
-    <button class="menu-btn" onclick="filterMenu('cafes',this)">Cafés</button>
-    <button class="menu-btn" onclick="filterMenu('lanches',this)">Lanches</button>
-    <button class="menu-btn" onclick="filterMenu('doces',this)">Doces</button>
-  </div>
+        // Máquina de Café
+        const coffeeGeo = new THREE.BoxGeometry(1.2, 1, 1);
+        const coffeeMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, metalness: 0.8 });
+        const coffeeMachine = new THREE.Mesh(coffeeGeo, coffeeMat);
+        coffeeMachine.position.set(-6, 2.3, -4);
+        scene.add(coffeeMachine);
 
-  <div id="menu-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <article class="card menu-item cafes">
-      <i class="fa-solid fa-mug-hot card-icon"></i>
-      <h3 class="text-lg font-bold">Espresso Overclock</h3>
-      <p class="text-slate-400 text-sm my-3">Espresso intenso com notas de chocolate e canela.</p>
-      <p class="price">R$ 9,50</p>
-    </article>
+        // Mesas de Café
+        for(let i = 0; i < 2; i++) {
+            const tableGeo = new THREE.CylinderGeometry(1, 1, 1.4, 16);
+            const tableMat = new THREE.MeshStandardMaterial({ color: 0x8b5a2b });
+            const table = new THREE.Mesh(tableGeo, tableMat);
+            table.position.set(-6, 0.7, 0 + (i * 4));
+            scene.add(table);
+        }
 
-    <article class="card menu-item cafes">
-      <i class="fa-solid fa-glass-water card-icon"></i>
-      <h3 class="text-lg font-bold">Mana Iced Latte</h3>
-      <p class="text-slate-400 text-sm my-3">Café gelado, leite cremoso e baunilha.</p>
-      <p class="price">R$ 16,00</p>
-    </article>
+        // --- LADO DIREITO: LAN HOUSE GAMER ---
+        // Bancada dos PCs
+        const deskGeo = new THREE.BoxGeometry(2.5, 1.4, 10);
+        const deskMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.5 });
+        const desk = new THREE.Mesh(deskGeo, deskMat);
+        desk.position.set(6, 0.7, -1);
+        scene.add(desk);
 
-    <article class="card menu-item lanches">
-      <i class="fa-solid fa-burger card-icon"></i>
-      <h3 class="text-lg font-bold">Combo Burger</h3>
-      <p class="text-slate-400 text-sm my-3">Hambúrguer artesanal com queijo e batatas.</p>
-      <p class="price">R$ 32,00</p>
-    </article>
+        // Monitores Gamer com Telas Brilhantes (RGB)
+        for(let i = -3.5; i <= 2.5; i += 2) {
+            // Suporte/Monitor
+            const monGeo = new THREE.BoxGeometry(0.1, 1.2, 1.6);
+            const monMat = new THREE.MeshStandardMaterial({ 
+                color: 0x00ff66, 
+                emissive: 0x004411,
+                roughness: 0.2 
+            });
+            const monitor = new THREE.Mesh(monGeo, monMat);
+            monitor.position.set(5.5, 2, i);
+            scene.add(monitor);
 
-    <article class="card menu-item lanches">
-      <i class="fa-solid fa-cheese card-icon"></i>
-      <h3 class="text-lg font-bold">Stealth Cheese</h3>
-      <p class="text-slate-400 text-sm my-3">Sanduíche tostado com três queijos.</p>
-      <p class="price">R$ 18,50</p>
-    </article>
+            // Gabinete com Luz Neon
+            const pcGeo = new THREE.BoxGeometry(0.8, 1.2, 0.6);
+            const pcMat = new THREE.MeshStandardMaterial({ 
+                color: 0x9d4edd, 
+                emissive: 0x330066 
+            });
+            const pc = new THREE.Mesh(pcGeo, pcMat);
+            pc.position.set(6.8, 2, i);
+            scene.add(pc);
+        }
 
-    <article class="card menu-item doces">
-      <i class="fa-solid fa-cookie-bite card-icon"></i>
-      <h3 class="text-lg font-bold">Muffin Respawn</h3>
-      <p class="text-slate-400 text-sm my-3">Muffin de mirtilo com chocolate branco.</p>
-      <p class="price">R$ 12,00</p>
-    </article>
+        // Divisória do Ambiente
+        const dividerGeo = new THREE.BoxGeometry(0.2, 4, 14);
+        const dividerMat = new THREE.MeshStandardMaterial({ color: 0x30363d, transparent: true, opacity: 0.3 });
+        const divider = new THREE.Mesh(dividerGeo, dividerMat);
+        divider.position.set(0, 2, 0);
+        scene.add(divider);
 
-    <article class="card menu-item doces">
-      <i class="fa-solid fa-ice-cream card-icon"></i>
-      <h3 class="text-lg font-bold">Brownie 8-Bit</h3>
-      <p class="text-slate-400 text-sm my-3">Brownie de chocolate com sorvete de baunilha.</p>
-      <p class="price">R$ 14,00</p>
-    </article>
-  </div>
-</section>
+        // Ajuste de Redimensionamento da Janela
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
 
-<section id="arena">
-  <h2 class="section-title">EXPLORE A <span class="cyan-text">ARENA 3D</span></h2>
-  <p class="section-subtitle">
-    Esquema interativo da planta interna. Toque em cada área para conhecer
-    sua função. O modelo é conceitual e pode ser ampliado futuramente.
-  </p>
-
-  <div class="grid lg:grid-cols-2 gap-8 items-start">
-    <div>
-      <div class="floor-plan">
-        <button class="room active" onclick="selectRoom(this,'coffee')">
-          <i class="fa-solid fa-mug-hot"></i>
-          <strong>COFFEE BAR</strong>
-          <small>Balcão e preparo</small>
-        </button>
-
-        <button class="room" onclick="selectRoom(this,'gaming')">
-          <i class="fa-solid fa-desktop"></i>
-          <strong>ARENA GAMER</strong>
-          <small>PCs e monitores</small>
-        </button>
-
-        <button class="room" onclick="selectRoom(this,'lounge')">
-          <i class="fa-solid fa-couch"></i>
-          <strong>LOUNGE</strong>
-          <small>Mesas e convivência</small>
-        </button>
-
-        <button class="room" onclick="selectRoom(this,'tournament')">
-          <i class="fa-solid fa-trophy"></i>
-          <strong>ESPORTS STAGE</strong>
-          <small>Palco e torneios</small>
-        </button>
-      </div>
-
-      <p class="text-xs text-slate-500 mt-3 text-center">
-        PLANTA ESQUEMÁTICA • VISÃO SUPERIOR INTERATIVA
-      </p>
-    </div>
-
-    <div>
-      <div class="card">
-        <span class="eyebrow mb-5">ÁREA SELECIONADA</span>
-        <h3 id="room-title" class="text-2xl font-bold mt-4 mb-3">Coffee Bar</h3>
-        <p id="room-description" class="text-slate-400 leading-7">
-          Balcão de atendimento, máquina de espresso, vitrine de doces e área de retirada de pedidos.
-        </p>
-        <div class="room-detail">
-          <p class="text-xs text-slate-500 mb-2">CONCEITO DE DESIGN</p>
-          <p id="room-extra" class="text-cyan-300 text-sm">
-            Luzes âmbar, balcão escuro e detalhes neon.
-          </p>
-        </div>
-      </div>
-
-      <div class="card mt-5">
-        <h3 class="font-bold mb-3"><i class="fa-solid fa-cube cyan-text mr-2"></i>Visão 3D</h3>
-        <p class="text-slate-400 text-sm leading-7">
-          A fachada acima representa a entrada externa. A planta ao lado divide
-          o interior em quatro zonas funcionais. Para um modelo 3D real, com
-          paredes, profundidade e câmera giratória, é possível adicionar uma
-          biblioteca WebGL como Three.js.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="torneios">
-  <h2 class="section-title">PRÓXIMOS <span class="gradient-text">EVENTOS</span></h2>
-  <p class="section-subtitle">Prepare seu time e venha competir com a comunidade.</p>
-
-  <div class="grid md:grid-cols-2 gap-6">
-    <article class="card">
-      <span class="eyebrow mb-4">24 OUT • 14H</span>
-      <h3 class="text-xl font-bold mt-4 mb-3">Pixel Cup</h3>
-      <p class="text-slate-400 text-sm leading-7">Torneio de FPS em equipes, com premiação conceitual e experiência presencial.</p>
-    </article>
-
-    <article class="card">
-      <span class="eyebrow mb-4">25 OUT • 16H</span>
-      <h3 class="text-xl font-bold mt-4 mb-3">Mid Lane Arena</h3>
-      <p class="text-slate-400 text-sm leading-7">Desafios individuais de estratégia e habilidade em jogos competitivos.</p>
-    </article>
-  </div>
-</section>
-
-<section id="reserva">
-  <div class="max-w-3xl mx-auto card">
-    <h2 class="section-title">RESERVE SUA <span class="cyan-text">ESTAÇÃO</span></h2>
-    <p class="section-subtitle">Preencha os dados para simular uma reserva.</p>
-
-    <form id="booking-form" class="space-y-5" onsubmit="handleBooking(event)">
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div>
-          <label for="booking-name">Nome</label>
-          <input id="booking-name" name="nome" required placeholder="Seu nome">
-        </div>
-        <div>
-          <label for="booking-contact">E-mail ou Discord</label>
-          <input id="booking-contact" name="contato" required placeholder="Seu contato">
-        </div>
-      </div>
-
-      <div class="grid sm:grid-cols-3 gap-4">
-        <div>
-          <label for="booking-plan">Plano</label>
-          <select id="booking-plan" name="plano">
-            <option>Passe Casual — 1 hora</option>
-            <option>Corujão — 5 horas</option>
-            <option>Squad VIP — 3 horas</option>
-          </select>
-        </div>
-        <div>
-          <label for="booking-date">Data</label>
-          <input id="booking-date" name="data" type="date" required>
-        </div>
-        <div>
-          <label for="booking-time">Horário</label>
-          <input id="booking-time" name="horario" type="time" required>
-        </div>
-      </div>
-
-      <div>
-        <label for="booking-notes">Observações</label>
-        <textarea id="booking-notes" name="observacoes" rows="3" placeholder="Preferência de estação ou pedido de café"></textarea>
-      </div>
-
-      <button class="btn w-full" type="submit">
-        <i class="fa-solid fa-check mr-2"></i>Confirmar reserva demonstrativa
-      </button>
-
-      <p id="booking-message" class="hidden text-green-300 text-sm text-center" role="status"></p>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <div class="logo mb-3">PIXEL<span class="cyan-text">&</span>BREW</div>
-  <p class="text-sm">Café especial, tecnologia e cultura gamer.</p>
-  <p class="text-xs mt-4">Projeto conceitual acadêmico • HTML, CSS e JavaScript</p>
-</footer>
-
-<div id="academic-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="academic-title" onclick="if(event.target===this)toggleAcademic()">
-  <div class="modal-content">
-    <div class="flex justify-between items-start gap-4 mb-5">
-      <h2 id="academic-title" class="text-xl font-bold">Ficha do Projeto</h2>
-      <button onclick="toggleAcademic()" aria-label="Fechar ficha" class="text-2xl text-slate-400">&times;</button>
-    </div>
-    <p class="text-slate-300 text-sm leading-7">
-      Pixel & Brew é uma proposta de cafeteria gamer que combina café especial,
-      estações de jogos, eventos e uma identidade visual Dark Neon.
-    </p>
-    <ul class="list-disc list-inside text-sm text-slate-400 space-y-2 mt-4">
-      <li>HTML para estrutura do website.</li>
-      <li>Tailwind CSS e CSS personalizado para o visual.</li>
-      <li>JavaScript para filtros, navegação e interações.</li>
-      <li>Fachada e planta interna esquemáticas.</li>
-    </ul>
-    <p class="text-xs text-slate-500 mt-5">Edite os dados da ficha conforme as informações reais do seu trabalho.</p>
-    <button class="btn mt-5" onclick="toggleAcademic()">Fechar</button>
-  </div>
-</div>
-
-<script>
-function toggleMobileMenu() {
-  const menu = document.getElementById('mobile-menu');
-  const icon = document.getElementById('menu-icon');
-
-  menu.classList.toggle('hidden');
-  icon.className = menu.classList.contains('hidden')
-    ? 'fa-solid fa-bars'
-    : 'fa-solid fa-xmark';
-}
-
-function filterMenu(category, button) {
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.style.display =
-      category === 'todos' || item.classList.contains(category)
-        ? ''
-        : 'none';
-  });
-
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  button.classList.add('active');
-}
-
-const roomData = {
-  coffee: {
-    title: 'Coffee Bar',
-    description: 'Balcão de atendimento, máquina de espresso, vitrine de doces e área de retirada de pedidos.',
-    extra: 'Luzes âmbar, balcão escuro e detalhes neon.'
-  },
-  gaming: {
-    title: 'Arena Gamer',
-    description: 'Fileiras de PCs, monitores de alta frequência, cadeiras ergonômicas e periféricos.',
-    extra: 'Iluminação ciano, roxa e RGB com tratamento acústico.'
-  },
-  lounge: {
-    title: 'Lounge Social',
-    description: 'Área para descansar, conversar, estudar e aproveitar bebidas longe das estações competitivas.',
-    extra: 'Sofás, mesas baixas e iluminação indireta confortável.'
-  },
-  tournament: {
-    title: 'eSports Stage',
-    description: 'Área conceitual para competições, telão, apresentação de equipes e transmissão de partidas.',
-    extra: 'Telão central, luzes de palco e identidade visual neon.'
-  }
-};
-
-function selectRoom(button, room) {
-  document.querySelectorAll('.room').forEach(item => {
-    item.classList.remove('active');
-  });
-
-  button.classList.add('active');
-
-  document.getElementById('room-title').textContent = roomData[room].title;
-  document.getElementById('room-description').textContent = roomData[room].description;
-  document.getElementById('room-extra').textContent = roomData[room].extra;
-}
-
-function toggleAcademic() {
-  document.getElementById('academic-modal').classList.toggle('hidden');
-}
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
-    document.getElementById('academic-modal').classList.add('hidden');
-  }
-});
-
-function handleBooking(event) {
-  event.preventDefault();
-
-  const form = document.getElementById('booking-form');
-  const message = document.getElementById('booking-message');
-  const name = document.getElementById('booking-name').value.trim();
-
-  message.textContent =
-    'Simulação concluída, ' + name +
-    '! Nenhuma reserva real foi enviada. É necessário conectar um serviço de reservas para confirmar um agendamento.';
-  message.classList.remove('hidden');
-
-  form.reset();
-}
-</script>
-
+        // Loop de Animação
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
-      </html>
-    
+</html>
